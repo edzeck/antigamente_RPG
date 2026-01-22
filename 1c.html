@@ -1,0 +1,2573 @@
+# antigamente_RPG
+[antigamente-rpg.-2.6 html.html](https://github.com/user-attachments/files/24784634/antigamente-rpg.-2.6.html.html)
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigamente RPG</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d4af37;
+            --primary-dark: #8b6914;
+            --bg-dark: #0f0a05;
+            --bg-medium: #1a120a;
+            --text-light: #e8dcc4;
+            --text-gold: #d4af37;
+            --border-gold: #8b6914;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0a0604 0%, #1a0f08 50%, #0a0604 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 105, 20, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, rgba(26, 18, 10, 0.8) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--text-gold);
+            margin-bottom: 5px;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: rgba(232, 220, 196, 0.6);
+            letter-spacing: 2px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(139, 105, 20, 0.3);
+        }
+
+        .tab {
+            font-family: 'Cinzel', serif;
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: rgba(232, 220, 196, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--text-gold);
+        }
+
+        .tab.active {
+            color: var(--text-gold);
+        }
+
+        .tab.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            background: rgba(15, 10, 5, 0.6);
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: rgba(212, 175, 55, 0.8);
+            margin-bottom: 8px;
+            font-size: 1.05em;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(139, 105, 20, 0.4);
+            border-radius: 3px;
+            color: var(--text-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .points-info {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(90deg, transparent, rgba(139, 105, 20, 0.2), transparent);
+            border-left: 2px solid var(--primary);
+            border-right: 2px solid var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+
+        .points-info strong {
+            color: var(--text-gold);
+            font-size: 1.3em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .attribute-box {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.9), rgba(26, 18, 10, 0.9));
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .attribute-box:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .attribute-box label {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+
+        .attribute-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .attribute-controls button {
+            width: 40px;
+            height: 40px;
+            background: rgba(139, 105, 20, 0.3);
+            border: 1px solid var(--border-gold);
+            color: var(--text-gold);
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-controls button:hover:not(:disabled) {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .attribute-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .attribute-value {
+            flex: 1;
+            text-align: center;
+            font-size: 2em;
+            font-weight: 600;
+            color: var(--text-gold);
+        }
+
+        .attribute-description {
+            font-size: 0.9em;
+            color: rgba(232, 220, 196, 0.5);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .race-info {
+            background: rgba(139, 105, 20, 0.1);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .race-info h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .race-info p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .bonus {
+            color: #6ee7b7;
+        }
+
+        .debuff {
+            color: #fca5a5;
+        }
+
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .experience-item {
+            background: rgba(15, 10, 5, 0.6);
+            padding: 12px 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .experience-item:hover {
+            background: rgba(139, 105, 20, 0.2);
+            border-color: var(--primary);
+        }
+
+        .experience-item.selected {
+            background: rgba(139, 105, 20, 0.3);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .experience-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .stats-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.8), rgba(26, 18, 10, 0.8));
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .stat-label {
+            font-family: 'Cinzel', serif;
+            color: rgba(212, 175, 55, 0.7);
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            color: var(--text-gold);
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+
+        .btn {
+            font-family: 'Cinzel', serif;
+            background: rgba(139, 105, 20, 0.3);
+            color: var(--text-gold);
+            border: 1px solid var(--border-gold);
+            padding: 14px 28px;
+            font-size: 1em;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .inventory-grid,
+        .spell-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.9), rgba(26, 18, 10, 0.8));
+            padding: 20px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(139, 105, 20, 0.2);
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.4em;
+            letter-spacing: 1px;
+        }
+
+        .card-badge {
+            background: rgba(139, 105, 20, 0.3);
+            padding: 6px 12px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            color: rgba(232, 220, 196, 0.7);
+            border: 1px solid rgba(139, 105, 20, 0.4);
+        }
+
+        .card-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(139, 105, 20, 0.1);
+        }
+
+        .card-detail:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: rgba(212, 175, 55, 0.7);
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--text-light);
+        }
+
+        .dice-section {
+            background: rgba(15, 10, 5, 0.7);
+            padding: 25px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .dice-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .dice-result {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.3em;
+            color: var(--text-gold);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+        }
+
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.5);
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--border-gold), var(--primary));
+            height: 100%;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.95em;
+            color: rgba(232, 220, 196, 0.6);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(232, 220, 196, 0.4);
+            font-style: italic;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .ornament {
+            text-align: center;
+            color: rgba(212, 175, 55, 0.3);
+            margin: 30px 0;
+            font-size: 1.5em;
+            letter-spacing: 10px;
+        }
+
+        .sheet-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sheet-stat-card {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.9), rgba(26, 18, 10, 0.8));
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            position: relative;
+        }
+
+        .sheet-stat-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.1em;
+            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .stat-current-max {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-input {
+            width: 60px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(139, 105, 20, 0.4);
+            border-radius: 3px;
+            color: var(--text-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .stat-max {
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 1.1em;
+        }
+
+        .stat-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .stat-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(139, 105, 20, 0.3);
+            border: 1px solid var(--border-gold);
+            color: var(--text-gold);
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .stat-btn:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .equipped-section {
+            margin-top: 20px;
+        }
+
+        .equipped-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .equipped-slot {
+            background: rgba(15, 10, 5, 0.6);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .equipped-slot h4 {
+            font-family: 'Cinzel', serif;
+            color: rgba(212, 175, 55, 0.7);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .equipped-item {
+            background: rgba(139, 105, 20, 0.2);
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid rgba(139, 105, 20, 0.4);
+        }
+
+        .equipped-item-name {
+            color: var(--text-gold);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .equipped-item-details {
+            font-size: 0.9em;
+            color: rgba(232, 220, 196, 0.6);
+        }
+
+        .equipped-empty {
+            text-align: center;
+            color: rgba(232, 220, 196, 0.3);
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .equip-btn {
+            padding: 6px 12px;
+            background: rgba(139, 105, 20, 0.3);
+            border: 1px solid var(--border-gold);
+            color: var(--text-gold);
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .equip-btn:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .equip-btn.equipped {
+            background: rgba(139, 105, 20, 0.5);
+            border-color: var(--primary);
+        }
+
+        .god-card {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.9), rgba(26, 18, 10, 0.8));
+            padding: 25px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .god-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .god-card.selected {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .god-name {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .god-title {
+            text-align: center;
+            color: rgba(212, 175, 55, 0.7);
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .god-description {
+            color: rgba(232, 220, 196, 0.8);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .vow-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--primary);
+            margin-top: 15px;
+        }
+
+        .vow-title {
+            font-family: 'Cinzel', serif;
+            color: var(--text-gold);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .vow-theme {
+            color: rgba(212, 175, 55, 0.7);
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .vow-precepts {
+            margin: 15px 0;
+        }
+
+        .vow-precepts h4 {
+            color: var(--text-gold);
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .vow-precepts ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .vow-precepts li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: rgba(232, 220, 196, 0.7);
+        }
+
+        .vow-precepts li:before {
+            content: "⚝";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .vow-powers {
+            margin-top: 15px;
+        }
+
+        .vow-powers h4 {
+            color: var(--text-gold);
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .power-item {
+            background: rgba(139, 105, 20, 0.1);
+            padding: 8px 12px;
+            border-radius: 3px;
+            margin: 5px 0;
+            border-left: 2px solid rgba(212, 175, 55, 0.5);
+            color: rgba(232, 220, 196, 0.8);
+        }
+
+        .gods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .vow-select {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(139, 105, 20, 0.1);
+            border-radius: 4px;
+            border: 2px solid rgba(139, 105, 20, 0.3);
+        }
+
+        .selected-vow-display {
+            background: linear-gradient(135deg, rgba(15, 10, 5, 0.9), rgba(26, 18, 10, 0.8));
+            padding: 20px;
+            border-radius: 4px;
+            border: 2px solid var(--primary);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+                letter-spacing: 2px;
+            }
+
+            .header {
+                padding: 20px 10px;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.85em;
+            }
+
+            .grid,
+            .stats-display {
+                grid-template-columns: 1fr;
+            }
+
+            .experiences-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .dice-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .dice-controls > * {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ANTIGAMENTE</h1>
+            <p class="subtitle">Sistema Medieval de Magia</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('creation')">Personagem</div>
+            <div class="tab" onclick="switchTab('gods')">Deuses & Votos</div>
+            <div class="tab" onclick="switchTab('sheet')">Ficha</div>
+            <div class="tab" onclick="switchTab('spells')">Grimório</div>
+            <div class="tab" onclick="switchTab('inventory')">Inventário</div>
+            <div class="tab" onclick="switchTab('dice')">Dados</div>
+            <div class="tab" onclick="switchTab('progression')">Progressão</div>
+        </div>
+
+        <div id="tab-creation" class="tab-content active">
+            <div class="section">
+                <div class="input-group">
+                    <label for="charName">Nome do Personagem</label>
+                    <input type="text" id="charName" placeholder="Digite o nome...">
+                </div>
+                <div class="input-group">
+                    <label for="charLevel">Nível</label>
+                    <input type="number" id="charLevel" value="1" min="1" max="100" onchange="updateLevel()">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Atributos</h2>
+                <div class="points-info">
+                    Pontos Disponíveis: <strong id="pointsAvailable">20</strong>
+                </div>
+                
+                <div class="grid">
+                    <div class="attribute-box">
+                        <label>Músculos</label>
+                        <div class="attribute-description">Força e capacidade de carregar</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('muscles', -1)">−</button>
+                            <div class="attribute-value" id="muscles-value">0</div>
+                            <button onclick="changeAttribute('muscles', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="attribute-box">
+                        <label>Agilidade</label>
+                        <div class="attribute-description">Velocidade e destreza</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('agility', -1)">−</button>
+                            <div class="attribute-value" id="agility-value">0</div>
+                            <button onclick="changeAttribute('agility', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="attribute-box">
+                        <label>Núcleo</label>
+                        <div class="attribute-description">Poder mágico</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('core', -1)">−</button>
+                            <div class="attribute-value" id="core-value">0</div>
+                            <button onclick="changeAttribute('core', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="attribute-box">
+                        <label>Durabilidade</label>
+                        <div class="attribute-description">Resistência e defesa</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('durability', -1)">−</button>
+                            <div class="attribute-value" id="durability-value">0</div>
+                            <button onclick="changeAttribute('durability', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="attribute-box">
+                        <label>Intelecto</label>
+                        <div class="attribute-description">Inteligência e conhecimento</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('intellect', -1)">−</button>
+                            <div class="attribute-value" id="intellect-value">0</div>
+                            <button onclick="changeAttribute('intellect', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="attribute-box">
+                        <label>Carisma</label>
+                        <div class="attribute-description">Persuasão e presença</div>
+                        <div class="attribute-controls">
+                            <button onclick="changeAttribute('charisma', -1)">−</button>
+                            <div class="attribute-value" id="charisma-value">0</div>
+                            <button onclick="changeAttribute('charisma', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Raça</h2>
+                <select id="raceSelect" onchange="selectRace()">
+                    <option value="">Selecione uma raça</option>
+                    <option value="elfoFloresta">Elfo da Floresta</option>
+                    <option value="elfoNegro">Elfo Negro</option>
+                    <option value="elfoMontanha">Elfo das Montanhas</option>
+                    <option value="orcFloresta">Orc da Floresta</option>
+                    <option value="orcPantano">Orc do Pântano</option>
+                    <option value="animhusAviparo">Animhus Avíparo</option>
+                    <option value="animhusFelino">Animhus Felino</option>
+                    <option value="animhusReptil">Animhus Réptil</option>
+                    <option value="animhusMamifero">Animhus Mamífero</option>
+                    <option value="animhusAquatico">Animhus Aquático</option>
+                    <option value="fada">Fada</option>
+                    <option value="anao">Anão</option>
+                    <option value="esqueletoMetal">Esqueleto de Metal</option>
+                    <option value="humano">Humano</option>
+                </select>
+                <div id="raceInfo" class="race-info" style="display: none;"></div>
+            </div>
+
+            <div class="section">
+                <h2>Experiências</h2>
+                <p style="margin-bottom: 20px; color: rgba(232, 220, 196, 0.6);">
+                    Selecione 8 experiências - <strong id="expCount" style="color: var(--text-gold);">0/8</strong>
+                </p>
+                <div class="experiences-grid" id="experiencesGrid"></div>
+            </div>
+
+            <div class="section">
+                <h2>Status</h2>
+                <div class="stats-display">
+                    <div class="stat-box">
+                        <div class="stat-label">PV</div>
+                        <div class="stat-value" id="pv-display">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">PM</div>
+                        <div class="stat-value" id="pm-display">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">DES</div>
+                        <div class="stat-value" id="des-display">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Inventário</div>
+                        <div class="stat-value" id="inv-display">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn" onclick="saveCharacter()">Salvar</button>
+                <button class="btn" onclick="exportCharacter()">Exportar</button>
+                <button class="btn" onclick="importCharacter()">Importar</button>
+            </div>
+        </div>
+
+        <div id="tab-gods" class="tab-content">
+            <div class="section">
+                <h2>Os Cinco Deuses</h2>
+                <p style="margin-bottom: 30px; color: rgba(232, 220, 196, 0.7); line-height: 1.8;">
+                    Eles existem há muito mais tempo que nós. É impossível negar sua presença. Mesmo que não interfiram diretamente, 
+                    seus mensageiros espalham suas palavras e dogmas. Aqueles que fazem votos sagrados recebem poder divino, 
+                    mas caso quebrem seu juramento, serão punidos severamente.
+                </p>
+
+                <div class="gods-grid">
+                    <div class="god-card" onclick="selectGod('una')">
+                        <div class="god-name">UNA</div>
+                        <div class="god-title">Deusa da Emoção, Amor e Força</div>
+                        <div class="god-description">
+                            A deusa que se manifesta através de sinais e não tolera ser contrariada. 
+                            Una valoriza a lealdade acima de tudo e glorifica a batalha. Suas consequências são terríveis 
+                            para aqueles que a desafiam, mas seus seguidores fiéis recebem força incomparável.
+                        </div>
+                    </div>
+
+                    <div class="god-card" onclick="selectGod('luria')">
+                        <div class="god-name">LURIA</div>
+                        <div class="god-title">A Mãe, Organizadora do Mundo</div>
+                        <div class="god-description">
+                            Detentora de sabedoria e conhecimento vasto, Luria mantém a ordem do mundo. 
+                            Seus ensinamentos são lei, e ela não perdoa desobediência. Aqueles que quebram 
+                            seus votos são simplesmente abandonados, deixados à própria sorte sem sua proteção divina.
+                        </div>
+                    </div>
+
+                    <div class="god-card" onclick="selectGod('madi')">
+                        <div class="god-name">MADI</div>
+                        <div class="god-title">Senhor do Mar e da Paz</div>
+                        <div class="god-description">
+                            Um deus pacífico que evita brigas e discussões. Madi cuida do mar e de todos que nele habitam. 
+                            Ama festas e celebrações, alegrando-se com toda forma de júbilo. Quando traído, não se enfurece, 
+                            mas sua tristeza pela confiança quebrada é profunda.
+                        </div>
+                    </div>
+
+                    <div class="god-card" onclick="selectGod('ofre')">
+                        <div class="god-name">OFRE</div>
+                        <div class="god-title">Deus da Consolação</div>
+                        <div class="god-description">
+                            Irmão gêmeo de Una, Ofre é emotivo e protetor. Ama seus filhos mesmo quando não pode salvá-los. 
+                            É vingativo e cheio de ódio contra aqueles que causam sofrimento, mas sempre tenta ajudar e consolar. 
+                            Por favor, não o tr...
+                        </div>
+                    </div>
+
+                    <div class="god-card" onclick="selectGod('adif')">
+                        <div class="god-name">ADIF</div>
+                        <div class="god-title">A Jovem, Guardiã da Natureza</div>
+                        <div class="god-description">
+                            A mais nova dos cinco deuses. Adif cuida da natureza e das pequenas criaturas que nela vivem. 
+                            Adora descer ao mundo mortal para observar a vida, geralmente acompanhada por um de seus irmãos. 
+                            Sua juventude traz curiosidade e maravilhamento ao mundo natural.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="godSelected" style="display: none;">
+                    <div class="ornament">⚝ ⚝ ⚝</div>
+                    
+                    <h2>Escolha seu Voto</h2>
+                    <p style="margin-bottom: 20px; color: rgba(232, 220, 196, 0.7);">
+                        Selecione um voto sagrado para seguir. Lembre-se: quebrar seu voto terá graves consequências.
+                    </p>
+
+                    <div id="vowsList"></div>
+                </div>
+
+                <div id="selectedVowDisplay" style="display: none;">
+                    <div class="ornament">⚝ ⚝ ⚝</div>
+                    <div class="selected-vow-display">
+                        <h3 style="color: var(--text-gold); text-align: center; margin-bottom: 20px;">Seu Voto Sagrado</h3>
+                        <div id="currentVowInfo"></div>
+                        <button class="btn" onclick="removeVow()" style="width: 100%; margin-top: 20px;">Renunciar Voto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-sheet" class="tab-content">
+            <div class="section">
+                <h2>Ficha de Combate</h2>
+                
+                <div class="sheet-stats">
+                    <div class="sheet-stat-card">
+                        <h3>Pontos de Vida (PV)</h3>
+                        <div class="stat-current-max">
+                            <div class="stat-input-wrapper">
+                                <input type="number" id="currentHP" class="stat-input" value="0" min="0">
+                            </div>
+                            <span>/</span>
+                            <span class="stat-max" id="maxHP">0</span>
+                        </div>
+                        <div class="stat-controls">
+                            <button class="stat-btn" onclick="adjustStat('HP', -5)">-5</button>
+                            <button class="stat-btn" onclick="adjustStat('HP', -1)">-1</button>
+                            <button class="stat-btn" onclick="adjustStat('HP', 1)">+1</button>
+                            <button class="stat-btn" onclick="adjustStat('HP', 5)">+5</button>
+                        </div>
+                    </div>
+
+                    <div class="sheet-stat-card">
+                        <h3>Pontos de Magia (PM)</h3>
+                        <div class="stat-current-max">
+                            <div class="stat-input-wrapper">
+                                <input type="number" id="currentMP" class="stat-input" value="0" min="0">
+                            </div>
+                            <span>/</span>
+                            <span class="stat-max" id="maxMP">0</span>
+                        </div>
+                        <div class="stat-controls">
+                            <button class="stat-btn" onclick="adjustStat('MP', -5)">-5</button>
+                            <button class="stat-btn" onclick="adjustStat('MP', -1)">-1</button>
+                            <button class="stat-btn" onclick="adjustStat('MP', 1)">+1</button>
+                            <button class="stat-btn" onclick="adjustStat('MP', 5)">+5</button>
+                        </div>
+                    </div>
+
+                    <div class="sheet-stat-card">
+                        <h3>Fôlego (Estamina)</h3>
+                        <div class="stat-current-max">
+                            <div class="stat-input-wrapper">
+                                <input type="number" id="currentStamina" class="stat-input" value="0" min="0">
+                            </div>
+                            <span>/</span>
+                            <span class="stat-max" id="maxStamina">10</span>
+                        </div>
+                        <div class="stat-controls">
+                            <button class="stat-btn" onclick="adjustStat('Stamina', -2)">-2</button>
+                            <button class="stat-btn" onclick="adjustStat('Stamina', -1)">-1</button>
+                            <button class="stat-btn" onclick="adjustStat('Stamina', 1)">+1</button>
+                            <button class="stat-btn" onclick="adjustStat('Stamina', 2)">+2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ornament">⚝ ⚝ ⚝</div>
+
+            <div class="section">
+                <h2>Equipamentos</h2>
+                <div class="equipped-grid">
+                    <div class="equipped-slot">
+                        <h4>Mão Principal</h4>
+                        <div id="equippedMainHand" class="equipped-empty">Vazio</div>
+                    </div>
+                    <div class="equipped-slot">
+                        <h4>Mão Secundária</h4>
+                        <div id="equippedOffHand" class="equipped-empty">Vazio</div>
+                    </div>
+                    <div class="equipped-slot">
+                        <h4>Armadura</h4>
+                        <div id="equippedArmor" class="equipped-empty">Vazio</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ornament">⚝ ⚝ ⚝</div>
+
+            <div class="section">
+                <h2>Magias Equipadas</h2>
+                <p style="margin-bottom: 15px; color: rgba(232, 220, 196, 0.6);">
+                    Selecione até 6 magias do grimório para acesso rápido
+                </p>
+                <div class="equipped-grid" id="equippedSpells"></div>
+            </div>
+        </div>
+
+        <div id="tab-spells" class="tab-content">
+            <div class="section">
+                <h2>Criar Magia</h2>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="spellName">Nome</label>
+                        <input type="text" id="spellName" placeholder="Bola de Fogo">
+                    </div>
+                    <div class="input-group">
+                        <label for="spellType">Tipo</label>
+                        <select id="spellType">
+                            <option value="Alteração">Alteração</option>
+                            <option value="Conjuração">Conjuração</option>
+                            <option value="Destruição">Destruição</option>
+                            <option value="Restauração">Restauração</option>
+                            <option value="encantar">Encantar</option>
+                            <option value="Ilusão">Ilusão</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="spellCost">Custo PM</label>
+                        <input type="number" id="spellCost" min="1" placeholder="5">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="spellDamage">Dano</label>
+                        <input type="text" id="spellDamage" placeholder="2d6+3">
+                    </div>
+                    <div class="input-group">
+                        <label for="spellHealing">Cura</label>
+                        <input type="text" id="spellHealing" placeholder="1d8+5">
+                    </div>
+                    <div class="input-group">
+                        <label for="spellSummon">Conjuração</label>
+                        <select id="spellSummon">
+                            <option value="">Nenhuma</option>
+                            <option value="Arma">Arma</option>
+                            <option value="Armadura">Armadura</option>
+                            <option value="Criatura">Criatura</option>
+                            <option value="Objeto">Objeto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="spellSummonValue">Valor da Conjuração/Proteção</label>
+                    <input type="text" id="spellSummonValue" placeholder="1d6 de dano ou +5 proteção">
+                </div>
+
+                <div class="input-group">
+                    <label for="spellDescription">Descrição</label>
+                    <textarea id="spellDescription" placeholder="Descreva os efeitos da magia..."></textarea>
+                </div>
+
+                <button class="btn" onclick="addSpell()">Adicionar ao Grimório</button>
+            </div>
+
+            <div class="ornament">⚝ ⚝ ⚝</div>
+
+            <div class="section">
+                <h2>Grimório</h2>
+                <div id="spellList" class="spell-list"></div>
+            </div>
+        </div>
+
+        <div id="tab-inventory" class="tab-content">
+            <div class="section">
+                <h2>Adicionar Item</h2>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="itemName">Nome</label>
+                        <input type="text" id="itemName" placeholder="Espada Longa">
+                    </div>
+                    <div class="input-group">
+                        <label for="itemType">Tipo</label>
+                        <select id="itemType">
+                            <option value="arma">Arma</option>
+                            <option value="armadura">Armadura</option>
+                            <option value="consumivel">Consumível</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="weaponFields" class="form-row">
+                    <div class="input-group">
+                        <label for="weaponRange">Alcance</label>
+                        <select id="weaponRange">
+                            <option value="curto">Curto</option>
+                            <option value="medio">Médio</option>
+                            <option value="longo">Longo</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="weaponDamage">Dano</label>
+                        <input type="text" id="weaponDamage" placeholder="1d8">
+                    </div>
+                    <div class="input-group">
+                        <label for="weaponDamageType">Tipo de Dano</label>
+                        <select id="weaponDamageType">
+                            <option value="perfuracao">Perfuração</option>
+                            <option value="impacto">Impacto</option>
+                            <option value="corte">Corte</option>
+                            <option value="magico">Mágico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="addItem()">Adicionar Item</button>
+            </div>
+
+            <div class="ornament">⚝ ⚝ ⚝</div>
+
+            <div class="section">
+                <h2>Seus Itens</h2>
+                <p style="margin-bottom: 20px; color: rgba(232, 220, 196, 0.6);">
+                    Espaço: <strong id="invSpace" style="color: var(--text-gold);">0</strong> slots
+                </p>
+                <div id="inventoryList" class="inventory-grid"></div>
+            </div>
+        </div>
+
+        <div id="tab-dice" class="tab-content">
+            <div class="section">
+                <h2>Teste de Atributo</h2>
+                <div class="dice-section">
+                    <div class="dice-controls">
+                        <select id="testAttribute" style="flex: 1;">
+                            <option value="muscles">Músculos</option>
+                            <option value="agility">Agilidade</option>
+                            <option value="core">Núcleo</option>
+                            <option value="durability">Durabilidade</option>
+                            <option value="intellect">Intelecto</option>
+                            <option value="charisma">Carisma</option>
+                        </select>
+                        <select id="testExperience" style="flex: 1;">
+                            <option value="">Sem experiência</option>
+                        </select>
+                        <button class="btn" onclick="rollAttributeTest()">Rolar</button>
+                    </div>
+                    <div class="dice-result" id="testResult">Aguardando rolagem...</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Rolagem Personalizada</h2>
+                <div class="dice-section">
+                    <div class="dice-controls">
+                        <input type="number" id="numDice" value="1" min="1" max="10" style="width: 80px;" placeholder="Qtd">
+                        <span style="color: var(--text-gold); font-size: 1.5em;">d</span>
+                        <select id="diceType" style="width: 100px;">
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="20" selected>20</option>
+                            <option value="100">100</option>
+                        </select>
+                        <input type="number" id="diceModifier" value="0" style="width: 80px;" placeholder="Mod">
+                        <button class="btn" onclick="rollCustomDice()">Rolar</button>
+                    </div>
+                    <div class="dice-result" id="customResult">Aguardando rolagem...</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-progression" class="tab-content">
+            <div class="section">
+                <h2>Progressão de Experiências</h2>
+                <div id="progressionList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const character = {
+            name: '',
+            level: 1,
+            attributes: {
+                muscles: 0,
+                agility: 0,
+                core: 0,
+                durability: 0,
+                intellect: 0,
+                charisma: 0
+            },
+            race: null,
+            experiences: [],
+            experienceProgress: {},
+            inventory: [],
+            spells: [],
+            currentHP: 0,
+            currentMP: 0,
+            currentStamina: 10,
+            equipped: {
+                mainHand: null,
+                offHand: null,
+                armor: null,
+                spells: []
+            },
+            selectedGod: null,
+            selectedVow: null,
+            passiveBuffs: {
+                magicResistance: 0,
+                meleeResistance: 0,
+                staminaCostReduction: 0,
+                manaCostReduction: 0
+            }
+        };
+
+        const gods = {
+            una: { name: 'UNA', title: 'Deusa da Emoção, Amor e Força' },
+            luria: { name: 'LURIA', title: 'A Mãe, Organizadora do Mundo' },
+            madi: { name: 'MADI', title: 'Senhor do Mar e da Paz' },
+            ofre: { name: 'OFRE', title: 'Deus da Consolação' },
+            adif: { name: 'ADIF', title: 'A Jovem, Guardiã da Natureza' }
+        };
+
+        const vows = {
+            guerreiro: {
+                name: 'Voto do Guerreiro de Fé',
+                icon: '⚔️',
+                theme: 'Honra, disciplina, combate justo',
+                precepts: [
+                    'Nunca atacar um inimigo indefeso',
+                    'Um duelo deve ser respeitado',
+                    'Traidores não merecem misericórdia'
+                ],
+                powers: [
+                    'Golpes ganham bônus contra inimigos mais fortes que você',
+                    'Pode desafiar um inimigo para duelo sagrado'
+                ]
+            },
+            chama: {
+                name: 'Voto da Chama Interior',
+                icon: '🔥',
+                theme: 'Vontade, sacrifício, paixão',
+                precepts: [
+                    'Nunca abandonar quem luta ao seu lado',
+                    'Sofrimento fortalece o espírito',
+                    'Emoções são fonte de poder'
+                ],
+                powers: [
+                    'Fica mais forte quando ferido',
+                    'Pode gastar vida para fortalecer magias'
+                ]
+            },
+            veu: {
+                name: 'Voto do Véu Sombrio',
+                icon: '🌑',
+                theme: 'Segredos, sombras, proteção oculta',
+                precepts: [
+                    'O anonimato é sagrado',
+                    'O sacrifício pessoal é necessário',
+                    'A verdade pode ser uma arma'
+                ],
+                powers: [
+                    'Ataques surpresa mais fortes',
+                    'Pode esconder itens e seres pequenos'
+                ]
+            },
+            circulo: {
+                name: 'Voto do Círculo Vivo',
+                icon: '🌿',
+                theme: 'Natureza, equilíbrio, vida',
+                precepts: [
+                    'Nunca destruir sem necessidade',
+                    'A vida deve sempre continuar',
+                    'A corrupção deve ser purificada'
+                ],
+                powers: [
+                    'Cura ampliada',
+                    'Comunicação com criaturas naturais'
+                ]
+            },
+            destino: {
+                name: 'Voto do Olho do Destino',
+                icon: '👁',
+                theme: 'Profecia, tempo, destino',
+                precepts: [
+                    'Nunca lutar contra o inevitável',
+                    'Proteger aqueles marcados pelo destino',
+                    'O futuro é mais importante que o presente'
+                ],
+                powers: [
+                    'Pode refazer uma rolagem',
+                    'Pode gastar 3 pontos de mana para aumentar sua sorte'
+                ]
+            },
+            sangue: {
+                name: 'Voto do Sangue',
+                icon: '🩸',
+                theme: 'Vingança, dor, justiça brutal',
+                precepts: [
+                    'Nunca perdoar grandes crimes',
+                    'A justiça não é gentil',
+                    'O medo é uma ferramenta'
+                ],
+                powers: [
+                    'Pode marcar inimigos',
+                    'Inimigos marcados sofrem penalidade de medo'
+                ]
+            },
+            luz: {
+                name: 'Voto da Luz do Amanhã',
+                icon: '✨',
+                theme: 'Esperança, redenção, futuro',
+                precepts: [
+                    'Sempre dar uma segunda chance',
+                    'Proteger os fracos',
+                    'Nunca desistir'
+                ],
+                powers: [
+                    'Cura dois alvos por vez',
+                    'Anular efeitos de medo'
+                ]
+            }
+        };
+
+        const races = {
+            elfoFloresta: {
+                name: 'Elfo da Floresta',
+                bonus: { agility: 10, core: 10 },
+                debuff: { durability: -10 },
+                power: 'Raiz da Vida - manipula força vital de plantas, cura aliados e drena vida',
+                experiences: ['Alquimia', 'Pontaria']
+            },
+            elfoNegro: {
+                name: 'Elfo Negro',
+                bonus: { core: 10, durability: 5 },
+                debuff: { muscles: -5 },
+                power: 'Sombra Devoradora - cria corrente que drena mana',
+                experiences: ['Conjuração', 'Arma de uma mão']
+            },
+            elfoMontanha: {
+                name: 'Elfo das Montanhas',
+                bonus: { core: 10, agility: 5, charisma: 5 },
+                debuff: { durability: -10 },
+                power: 'Pele de Cristal - corpo vira pedra mágica, reflete luz e fica invisível',
+                experiences: ['encantar', 'Ilusão']
+            },
+            orcFloresta: {
+                name: 'Orc da Floresta',
+                bonus: { muscles: 15, agility: 5 },
+                debuff: { intellect: -10 },
+                power: 'Uivo da Selva - grito que causa pânico no inimigo',
+                experiences: ['arma de duas mãos', 'encantar']
+            },
+            orcPantano: {
+                name: 'Orc do Pântano',
+                bonus: { durability: 15, core: 5 },
+                debuff: { agility: -10 },
+                power: 'Miasma Tóxico - reveste de raiva, adiciona 1d6 de dano em armas de duas mãos',
+                experiences: ['Destruição', 'Armadura pesada']
+            },
+            animhusAviparo: {
+                name: 'Animhus Avíparo',
+                bonus: { agility: 15, charisma: 5 },
+                debuff: { durability: -5 },
+                power: 'Sopro dos Céus - rajada de vento que arremessa inimigos (1d4 dano)',
+                experiences: ['percepção', 'Arcaísmo']
+            },
+            animhusFelino: {
+                name: 'Animhus Felino',
+                bonus: { agility: 10, charisma: 5 },
+                debuff: { core: -10 },
+                power: 'Olhos do Predador - marca inimigos, aumenta chance de crítico em -2',
+                experiences: ['Mãos nuas', 'Furtividade']
+            },
+            animhusReptil: {
+                name: 'Animhus Réptil',
+                bonus: { durability: 10, core: 5 },
+                debuff: { charisma: -10 },
+                power: 'Arranhão Permanente - corta alvo causando sangramento (1d4) infinito',
+                experiences: ['Destruição', 'Ferraria']
+            },
+            animhusMamifero: {
+                name: 'Animhus Mamífero',
+                bonus: { muscles: 15 },
+                debuff: { agility: -10 },
+                power: 'Rugido Sísmico - atordoa inimigos, alvo não pode esquivar',
+                experiences: ['escudo', 'Restauração', 'adestramento']
+            },
+            animhusAquatico: {
+                name: 'Animhus Aquático',
+                bonus: { durability: 10, charisma: 10 },
+                debuff: {},
+                power: 'Respiração Aquática - pode respirar embaixo da água e dificilmente se sufoca',
+                experiences: ['percepção', 'Arma de uma mão']
+            },
+            fada: {
+                name: 'Fada',
+                bonus: { core: 15, agility: 10 },
+                debuff: { durability: -15 },
+                power: 'Sopro Arcano - dispara magia pura que empurra e explode',
+                experiences: ['Alquimia', 'Alteração']
+            },
+            anao: {
+                name: 'Anão',
+                bonus: { durability: 15, muscles: 5 },
+                debuff: { agility: -10 },
+                power: 'Coração Vulcânico - libera magma mágico, aumenta defesa e queima inimigos',
+                experiences: ['encantar', 'Ferraria']
+            },
+            esqueletoMetal: {
+                name: 'Esqueleto de Metal',
+                bonus: { agility: 15, intellect: 5 },
+                debuff: { core: -15 },
+                power: 'Mono Ataque - pode usar agilidade para atacar com armas de uma mão',
+                experiences: ['Armadura leve', 'Arma de uma mão']
+            },
+            humano: {
+                name: 'Humano',
+                bonus: { muscles: 5, agility: 5, core: 5, durability: 5, intellect: 5, charisma: 5 },
+                debuff: {},
+                power: 'Ataque Repetitivo',
+                experiences: ['Arcaísmo', 'Lábia']
+            }
+        };
+
+        const allExperiences = [
+            'Arma de uma mão', 'arma de duas mãos', 'escudo', 'Ferraria', 'Alquimia',
+            'Armadura leve', 'Armadura pesada', 'Roubo', 'arrombamento', 'Furtividade',
+            'Lábia', 'Alteração', 'Conjuração', 'Destruição', 'Restauração',
+            'encantar', 'Ilusão', 'Pontaria', 'Mãos nuas', 'Arcaísmo',
+            'percepção', 'Medicina', 'adestramento'
+        ];
+
+        function initExperiences() {
+            const grid = document.getElementById('experiencesGrid');
+            grid.innerHTML = '';
+            allExperiences.forEach(exp => {
+                const div = document.createElement('div');
+                div.className = 'experience-item';
+                div.onclick = () => toggleExperience(exp, div);
+                div.innerHTML = `<input type="checkbox" onclick="event.stopPropagation();"> ${exp}`;
+                grid.appendChild(div);
+            });
+
+            const select = document.getElementById('testExperience');
+            select.innerHTML = '<option value="">Sem experiência</option>';
+            allExperiences.forEach(exp => {
+                const option = document.createElement('option');
+                option.value = exp;
+                option.textContent = exp;
+                select.appendChild(option);
+            });
+        }
+
+        function toggleExperience(exp, element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            const currentCount = character.experiences.length;
+
+            if (checkbox.checked) {
+                checkbox.checked = false;
+                element.classList.remove('selected');
+                const index = character.experiences.indexOf(exp);
+                if (index > -1) {
+                    character.experiences.splice(index, 1);
+                }
+            } else {
+                if (currentCount >= 8) {
+                    alert('Você já selecionou 8 experiências!');
+                    return;
+                }
+                checkbox.checked = true;
+                element.classList.add('selected');
+                character.experiences.push(exp);
+                if (!character.experienceProgress[exp]) {
+                    character.experienceProgress[exp] = { level: 0, xp: 0 };
+                }
+            }
+
+            document.getElementById('expCount').textContent = `${character.experiences.length}/8`;
+            updateProgression();
+        }
+
+        function changeAttribute(attr, change) {
+            const currentValue = character.attributes[attr];
+            const newValue = currentValue + change;
+
+            if (newValue < 0 || newValue > 35) return;
+
+            const totalPoints = Object.values(character.attributes).reduce((a, b) => a + b, 0);
+            const basePoints = 20;
+            const raceBonus = getRaceTotalBonus();
+            const maxPoints = basePoints + raceBonus;
+
+            if (change > 0 && totalPoints >= maxPoints) {
+                return;
+            }
+
+            character.attributes[attr] = newValue;
+            updateAttributeDisplay();
+            updateStats();
+        }
+
+        function getRaceTotalBonus() {
+            if (!character.race) return 0;
+            const race = races[character.race];
+            let total = 0;
+            if (race.bonus) {
+                Object.values(race.bonus).forEach(v => total += v);
+            }
+            if (race.debuff) {
+                Object.values(race.debuff).forEach(v => total += v);
+            }
+            return total;
+        }
+
+        function updateAttributeDisplay() {
+            Object.keys(character.attributes).forEach(attr => {
+                document.getElementById(`${attr}-value`).textContent = character.attributes[attr];
+            });
+
+            const totalPoints = Object.values(character.attributes).reduce((a, b) => a + b, 0);
+            const basePoints = 20;
+            const raceBonus = getRaceTotalBonus();
+            const available = (basePoints + raceBonus) - totalPoints;
+            document.getElementById('pointsAvailable').textContent = available;
+        }
+
+        function selectRace() {
+            const raceKey = document.getElementById('raceSelect').value;
+            if (!raceKey) {
+                document.getElementById('raceInfo').style.display = 'none';
+                character.race = null;
+                updateAttributeDisplay();
+                return;
+            }
+
+            if (character.race) {
+                const oldRace = races[character.race];
+                if (oldRace.bonus) {
+                    Object.keys(oldRace.bonus).forEach(attr => {
+                        character.attributes[attr] -= oldRace.bonus[attr];
+                    });
+                }
+                if (oldRace.debuff) {
+                    Object.keys(oldRace.debuff).forEach(attr => {
+                        character.attributes[attr] -= oldRace.debuff[attr];
+                    });
+                }
+            }
+
+            character.race = raceKey;
+            const race = races[raceKey];
+
+            if (race.bonus) {
+                Object.keys(race.bonus).forEach(attr => {
+                    character.attributes[attr] += race.bonus[attr];
+                });
+            }
+            if (race.debuff) {
+                Object.keys(race.debuff).forEach(attr => {
+                    character.attributes[attr] += race.debuff[attr];
+                });
+            }
+
+            const infoDiv = document.getElementById('raceInfo');
+            let html = `<h4>${race.name}</h4>`;
+            
+            if (race.bonus && Object.keys(race.bonus).length > 0) {
+                html += '<p class="bonus"><strong>Bônus:</strong> ';
+                html += Object.entries(race.bonus).map(([k, v]) => `${k} +${v}`).join(', ');
+                html += '</p>';
+            }
+
+            if (race.debuff && Object.keys(race.debuff).length > 0) {
+                html += '<p class="debuff"><strong>Debuff:</strong> ';
+                html += Object.entries(race.debuff).map(([k, v]) => `${k} ${v}`).join(', ');
+                html += '</p>';
+            }
+
+            html += `<p><strong>Poder:</strong> ${race.power}</p>`;
+            html += `<p><strong>Experiências:</strong> ${race.experiences.join(', ')}</p>`;
+
+            infoDiv.innerHTML = html;
+            infoDiv.style.display = 'block';
+
+            updateAttributeDisplay();
+            updateStats();
+        }
+
+        function updateStats() {
+            const pv = Math.round((character.attributes.muscles + character.attributes.durability) / 2);
+            const pm = character.attributes.core;
+            const des = Math.floor(character.attributes.agility / 2);
+            const inv = character.attributes.muscles < 0 ? 1 : Math.floor(character.attributes.muscles / 2);
+
+            document.getElementById('pv-display').textContent = pv;
+            document.getElementById('pm-display').textContent = pm;
+            document.getElementById('des-display').textContent = des;
+            document.getElementById('inv-display').textContent = inv;
+            document.getElementById('invSpace').textContent = inv;
+
+            if (document.getElementById('maxHP')) {
+                document.getElementById('maxHP').textContent = pv;
+                document.getElementById('maxMP').textContent = pm;
+            }
+        }
+
+        function adjustStat(stat, amount) {
+            const currentInput = document.getElementById(`current${stat}`);
+            const maxValue = parseInt(document.getElementById(`max${stat}`).textContent);
+            let newValue = parseInt(currentInput.value) + amount;
+
+            if (newValue < 0) newValue = 0;
+            if (newValue > maxValue) newValue = maxValue;
+
+            currentInput.value = newValue;
+            character[`current${stat}`] = newValue;
+        }
+
+        function equipItem(index, slot) {
+            const item = character.inventory[index];
+            
+            if (character.equipped[slot]) {
+                if (confirm('Deseja substituir o item equipado?')) {
+                    character.equipped[slot] = item;
+                }
+            } else {
+                character.equipped[slot] = item;
+            }
+            
+            updateEquippedDisplay();
+            updateInventoryDisplay();
+        }
+
+        function unequipItem(slot) {
+            character.equipped[slot] = null;
+            updateEquippedDisplay();
+            updateInventoryDisplay();
+        }
+
+        function updateEquippedDisplay() {
+            const slots = ['mainHand', 'offHand', 'armor'];
+            const slotNames = {
+                mainHand: 'equippedMainHand',
+                offHand: 'equippedOffHand',
+                armor: 'equippedArmor'
+            };
+
+            slots.forEach(slot => {
+                const element = document.getElementById(slotNames[slot]);
+                const item = character.equipped[slot];
+
+                if (item) {
+                    let html = `<div class="equipped-item">`;
+                    html += `<div class="equipped-item-name">${item.name}</div>`;
+                    
+                    if (item.type === 'arma') {
+                        html += `<div class="equipped-item-details">`;
+                        html += `${item.damage} (${item.damageType}) - ${item.range}`;
+                        html += `</div>`;
+                    }
+                    
+                    html += `<button class="stat-btn" onclick="unequipItem('${slot}')" style="margin-top: 10px; width: 100%;">Desequipar</button>`;
+                    html += `</div>`;
+                    element.innerHTML = html;
+                } else {
+                    element.innerHTML = '<div class="equipped-empty">Vazio</div>';
+                }
+            });
+
+            updateEquippedSpells();
+        }
+
+        function toggleEquipSpell(index) {
+            const spell = character.spells[index];
+            const equippedIndex = character.equipped.spells.findIndex(s => s.name === spell.name);
+
+            if (equippedIndex > -1) {
+                character.equipped.spells.splice(equippedIndex, 1);
+            } else {
+                if (character.equipped.spells.length >= 6) {
+                    alert('Você pode equipar no máximo 6 magias!');
+                    return;
+                }
+                character.equipped.spells.push(spell);
+            }
+
+            updateEquippedSpells();
+            updateSpellDisplay();
+        }
+
+        function updateEquippedSpells() {
+            const container = document.getElementById('equippedSpells');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            for (let i = 0; i < 6; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'equipped-slot';
+                
+                const spell = character.equipped.spells[i];
+                
+                if (spell) {
+                    let html = `<div class="equipped-item">`;
+                    html += `<div class="equipped-item-name">${spell.name}</div>`;
+                    html += `<div class="equipped-item-details">`;
+                    html += `${spell.type} - ${spell.cost} PM`;
+                    html += `</div>`;
+                    html += `<button class="stat-btn" onclick="unequipSpell(${i})" style="margin-top: 10px; width: 100%;">Remover</button>`;
+                    html += `</div>`;
+                    slot.innerHTML = html;
+                } else {
+                    slot.innerHTML = `<h4>Slot ${i + 1}</h4><div class="equipped-empty">Vazio</div>`;
+                }
+                
+                container.appendChild(slot);
+            }
+        }
+
+        function unequipSpell(slotIndex) {
+            character.equipped.spells.splice(slotIndex, 1);
+            updateEquippedSpells();
+            updateSpellDisplay();
+        }
+
+        function isItemEquipped(item) {
+            return Object.values(character.equipped).some(equipped => 
+                equipped && equipped.name === item.name
+            );
+        }
+
+        function isSpellEquipped(spell) {
+            return character.equipped.spells.some(s => s.name === spell.name);
+        }
+
+        function selectGod(godKey) {
+            character.selectedGod = godKey;
+            
+            document.querySelectorAll('.god-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.god-card').classList.add('selected');
+
+            document.getElementById('godSelected').style.display = 'block';
+            displayVows();
+        }
+
+        function displayVows() {
+            const container = document.getElementById('vowsList');
+            container.innerHTML = '';
+
+            Object.keys(vows).forEach(vowKey => {
+                const vow = vows[vowKey];
+                const div = document.createElement('div');
+                div.className = 'vow-section';
+                div.style.cursor = 'pointer';
+                div.onclick = () => selectVow(vowKey);
+
+                let html = `
+                    <div class="vow-title">${vow.icon} ${vow.name}</div>
+                    <div class="vow-theme">${vow.theme}</div>
+                    
+                    <div class="vow-precepts">
+                        <h4>Preceitos</h4>
+                        <ul>
+                            ${vow.precepts.map(p => `<li>${p}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="vow-powers">
+                        <h4>Poderes Concedidos</h4>
+                        ${vow.powers.map(p => `<div class="power-item">${p}</div>`).join('')}
+                    </div>
+                `;
+
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+        }
+
+        function selectVow(vowKey) {
+            if (confirm('Deseja fazer este voto sagrado? Quebrá-lo terá graves consequências.')) {
+                character.selectedVow = vowKey;
+                displaySelectedVow();
+            }
+        }
+
+        function displaySelectedVow() {
+            if (!character.selectedVow) {
+                document.getElementById('selectedVowDisplay').style.display = 'none';
+                return;
+            }
+
+            const vow = vows[character.selectedVow];
+            const god = gods[character.selectedGod];
+            
+            const container = document.getElementById('currentVowInfo');
+            let html = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 3em; margin-bottom: 10px;">${vow.icon}</div>
+                    <h3 style="color: var(--text-gold); margin-bottom: 5px;">${vow.name}</h3>
+                    <p style="color: rgba(212, 175, 55, 0.7); font-style: italic;">${vow.theme}</p>
+                    <p style="color: rgba(232, 220, 196, 0.6); margin-top: 10px;">Jurado a ${god.name}</p>
+                </div>
+
+                <div class="vow-precepts">
+                    <h4>Seus Preceitos Sagrados</h4>
+                    <ul>
+                        ${vow.precepts.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="vow-powers">
+                    <h4>Poderes Divinos Concedidos</h4>
+                    ${vow.powers.map(p => `<div class="power-item">${p}</div>`).join('')}
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248, 113, 113, 0.3); border-radius: 4px;">
+                    <strong style="color: #fca5a5;">⚠ Aviso:</strong>
+                    <p style="color: rgba(232, 220, 196, 0.7); margin-top: 5px;">
+                        Quebrar este voto sagrado resultará em punição divina severa.
+                    </p>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            document.getElementById('selectedVowDisplay').style.display = 'block';
+            document.getElementById('godSelected').style.display = 'none';
+        }
+
+        function removeVow() {
+            if (confirm('Tem certeza que deseja renunciar seu voto? Isso pode ter consequências!')) {
+                character.selectedVow = null;
+                character.selectedGod = null;
+                document.getElementById('selectedVowDisplay').style.display = 'none';
+                document.querySelectorAll('.god-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            if (tabName === 'inventory') {
+                updateInventoryDisplay();
+            } else if (tabName === 'progression') {
+                updateProgression();
+            } else if (tabName === 'spells') {
+                updateSpellDisplay();
+            } else if (tabName === 'sheet') {
+                updateEquippedDisplay();
+                const maxHP = Math.round((character.attributes.muscles + character.attributes.durability) / 2);
+                const maxMP = character.attributes.core;
+                document.getElementById('currentHP').value = character.currentHP || 0;
+                document.getElementById('currentMP').value = character.currentMP || 0;
+                document.getElementById('currentStamina').value = character.currentStamina || 10;
+                document.getElementById('maxHP').textContent = maxHP;
+                document.getElementById('maxMP').textContent = maxMP;
+            } else if (tabName === 'gods') {
+                if (character.selectedVow) {
+                    displaySelectedVow();
+                } else if (character.selectedGod) {
+                    document.getElementById('godSelected').style.display = 'block';
+                    displayVows();
+                    document.querySelectorAll('.god-card').forEach((card, idx) => {
+                        const godKeys = Object.keys(gods);
+                        if (godKeys[idx] === character.selectedGod) {
+                            card.classList.add('selected');
+                        }
+                    });
+                }
+            }
+        }
+
+        function addSpell() {
+            const name = document.getElementById('spellName').value;
+            const type = document.getElementById('spellType').value;
+            const cost = document.getElementById('spellCost').value;
+            const damage = document.getElementById('spellDamage').value;
+            const healing = document.getElementById('spellHealing').value;
+            const summon = document.getElementById('spellSummon').value;
+            const summonValue = document.getElementById('spellSummonValue').value;
+            const description = document.getElementById('spellDescription').value;
+
+            if (!name || !cost || !description) {
+                alert('Preencha pelo menos o nome, custo de PM e descrição da magia!');
+                return;
+            }
+
+            const spell = {
+                name,
+                type,
+                cost: parseInt(cost),
+                damage: damage || null,
+                healing: healing || null,
+                summon: summon || null,
+                summonValue: summonValue || null,
+                description
+            };
+
+            character.spells.push(spell);
+            updateSpellDisplay();
+
+            document.getElementById('spellName').value = '';
+            document.getElementById('spellCost').value = '';
+            document.getElementById('spellDamage').value = '';
+            document.getElementById('spellHealing').value = '';
+            document.getElementById('spellSummon').value = '';
+            document.getElementById('spellSummonValue').value = '';
+            document.getElementById('spellDescription').value = '';
+        }
+
+        function updateSpellDisplay() {
+            const list = document.getElementById('spellList');
+            list.innerHTML = '';
+
+            if (character.spells.length === 0) {
+                list.innerHTML = '<div class="empty-state">Nenhuma magia criada ainda</div>';
+                return;
+            }
+
+            character.spells.forEach((spell, index) => {
+                const div = document.createElement('div');
+                div.className = 'card';
+
+                let html = `
+                    <div class="card-header">
+                        <div class="card-title">${spell.name}</div>
+                        <div class="card-badge">${spell.type}</div>
+                    </div>
+                    <div class="card-detail">
+                        <span class="detail-label">Custo PM</span>
+                        <span class="detail-value">${spell.cost}</span>
+                    </div>
+                `;
+
+                if (spell.damage) {
+                    html += `<div class="card-detail">
+                        <span class="detail-label">Dano</span>
+                        <span class="detail-value">${spell.damage}</span>
+                    </div>`;
+                }
+
+                if (spell.healing) {
+                    html += `<div class="card-detail">
+                        <span class="detail-label">Cura</span>
+                        <span class="detail-value">${spell.healing}</span>
+                    </div>`;
+                }
+
+                if (spell.summon) {
+                    html += `<div class="card-detail">
+                        <span class="detail-label">Conjura</span>
+                        <span class="detail-value">${spell.summon}</span>
+                    </div>`;
+                }
+
+                if (spell.summonValue) {
+                    html += `<div class="card-detail">
+                        <span class="detail-label">Valor</span>
+                        <span class="detail-value">${spell.summonValue}</span>
+                    </div>`;
+                }
+
+                html += `
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(139, 105, 20, 0.2);">
+                        <div class="detail-label" style="margin-bottom: 8px;">Descrição</div>
+                        <div style="color: rgba(232, 220, 196, 0.7); line-height: 1.6;">${spell.description}</div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn btn-small" onclick="removeSpell(${index})" style="flex: 1;">Remover</button>
+                        <button class="btn btn-small ${isSpellEquipped(spell) ? 'equipped' : ''}" onclick="toggleEquipSpell(${index})" style="flex: 1;">
+                            ${isSpellEquipped(spell) ? 'Equipada' : 'Equipar'}
+                        </button>
+                    </div>
+                `;
+
+                div.innerHTML = html;
+                list.appendChild(div);
+            });
+        }
+
+        function removeSpell(index) {
+            if (confirm('Remover esta magia?')) {
+                character.spells.splice(index, 1);
+                updateSpellDisplay();
+            }
+        }
+
+        function addItem() {
+            const name = document.getElementById('itemName').value;
+            const type = document.getElementById('itemType').value;
+
+            if (!name) {
+                alert('Digite o nome do item!');
+                return;
+            }
+
+            const item = { name, type };
+
+            if (type === 'arma') {
+                item.range = document.getElementById('weaponRange').value;
+                item.damage = document.getElementById('weaponDamage').value;
+                item.damageType = document.getElementById('weaponDamageType').value;
+            }
+
+            character.inventory.push(item);
+            updateInventoryDisplay();
+
+            document.getElementById('itemName').value = '';
+            document.getElementById('weaponDamage').value = '';
+        }
+
+        function updateInventoryDisplay() {
+            const list = document.getElementById('inventoryList');
+            list.innerHTML = '';
+
+            if (character.inventory.length === 0) {
+                list.innerHTML = '<div class="empty-state">Inventário vazio</div>';
+                return;
+            }
+
+            character.inventory.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                
+                let html = `
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-badge">${item.type}</div>
+                    </div>
+                `;
+                
+                if (item.type === 'arma') {
+                    html += `
+                        <div class="card-detail">
+                            <span class="detail-label">Alcance</span>
+                            <span class="detail-value">${item.range}</span>
+                        </div>
+                        <div class="card-detail">
+                            <span class="detail-label">Dano</span>
+                            <span class="detail-value">${item.damage}</span>
+                        </div>
+                        <div class="card-detail">
+                            <span class="detail-label">Tipo</span>
+                            <span class="detail-value">${item.damageType}</span>
+                        </div>
+                    `;
+                }
+
+                const isEquipped = isItemEquipped(item);
+                html += `<div style="margin-top: 15px; display: flex; gap: 10px;">`;
+                html += `<button class="btn btn-small" onclick="removeItem(${index})" style="flex: 1;">Remover</button>`;
+                
+                if (item.type === 'arma') {
+                    html += `<button class="btn btn-small ${character.equipped.mainHand && character.equipped.mainHand.name === item.name ? 'equipped' : ''}" 
+                             onclick="equipItem(${index}, 'mainHand')" style="flex: 1;">Mão Principal</button>`;
+                    html += `<button class="btn btn-small ${character.equipped.offHand && character.equipped.offHand.name === item.name ? 'equipped' : ''}" 
+                             onclick="equipItem(${index}, 'offHand')" style="flex: 1;">Mão Secundária</button>`;
+                } else if (item.type === 'armadura') {
+                    html += `<button class="btn btn-small ${character.equipped.armor && character.equipped.armor.name === item.name ? 'equipped' : ''}" 
+                             onclick="equipItem(${index}, 'armor')" style="flex: 1;">Equipar</button>`;
+                }
+                
+                html += `</div>`;
+
+                div.innerHTML = html;
+                list.appendChild(div);
+            });
+        }
+
+        function removeItem(index) {
+            character.inventory.splice(index, 1);
+            updateInventoryDisplay();
+        }
+
+        function rollDice(num, sides) {
+            const results = [];
+            for (let i = 0; i < num; i++) {
+                results.push(Math.floor(Math.random() * sides) + 1);
+            }
+            return results;
+        }
+
+        function rollAttributeTest() {
+            const attr = document.getElementById('testAttribute').value;
+            const exp = document.getElementById('testExperience').value;
+
+            const attrValue = character.attributes[attr];
+            let expBonus = 0;
+
+            if (exp && character.experiences.includes(exp)) {
+                expBonus = 5;
+                const progress = character.experienceProgress[exp];
+                if (progress) {
+                    expBonus += progress.level;
+                }
+            }
+
+            let numDice = Math.floor(attrValue / 10);
+            let modifier = 0;
+
+            if (attrValue >= 1 && attrValue <= 4) {
+                numDice = 1;
+                modifier = -(5 - attrValue);
+            } else if (attrValue < 0) {
+                const negGroups = Math.floor(Math.abs(attrValue) / 10);
+                numDice = negGroups + 1;
+            }
+
+            if (numDice < 1) numDice = 1;
+
+            const rolls = rollDice(numDice, 20);
+            let result;
+
+            if (attrValue < 0) {
+                result = Math.min(...rolls);
+                const secondDigit = Math.abs(attrValue) % 10;
+                result -= secondDigit;
+            } else {
+                result = Math.max(...rolls);
+            }
+
+            const finalResult = result + modifier + expBonus;
+
+            let resultText = `<div style="text-align: left;">`;
+            resultText += `<div style="margin-bottom: 15px;">`;
+            resultText += `<strong>${attr.toUpperCase()}</strong> (${attrValue})`;
+            if (exp) resultText += ` + <strong>${exp}</strong> (+${expBonus})`;
+            resultText += `</div>`;
+            resultText += `<div style="margin-bottom: 10px;">Dados: ${numDice}d20 → [${rolls.join(', ')}]</div>`;
+            if (modifier !== 0) resultText += `<div>Modificador: ${modifier}</div>`;
+            resultText += `</div>`;
+            resultText += `<div style="font-size: 2em; margin-top: 20px; text-align: center; color: var(--text-gold);">${finalResult}</div>`;
+
+            if (finalResult === 20) {
+                resultText += `<div style="color: #6ee7b7; margin-top: 15px; text-align: center;">✦ CRÍTICO ✦</div>`;
+                if (exp && character.experiences.includes(exp)) {
+                    addExperienceXP(exp, 2);
+                }
+            } else if (finalResult === 1) {
+                resultText += `<div style="color: #fca5a5; margin-top: 15px; text-align: center;">FALHA CRÍTICA</div>`;
+            } else if (finalResult >= 15 && exp && character.experiences.includes(exp)) {
+                addExperienceXP(exp, 1);
+            }
+
+            document.getElementById('testResult').innerHTML = resultText;
+        }
+
+        function rollCustomDice() {
+            const num = parseInt(document.getElementById('numDice').value);
+            const sides = parseInt(document.getElementById('diceType').value);
+            const mod = parseInt(document.getElementById('diceModifier').value) || 0;
+
+            const rolls = rollDice(num, sides);
+            const sum = rolls.reduce((a, b) => a + b, 0);
+            const total = sum + mod;
+
+            let resultText = `<div style="text-align: left;">`;
+            resultText += `<div style="margin-bottom: 10px;">${num}d${sides}${mod >= 0 ? '+' : ''}${mod}</div>`;
+            resultText += `<div>Dados: [${rolls.join(', ')}]</div>`;
+            resultText += `</div>`;
+            resultText += `<div style="font-size: 2em; margin-top: 20px; text-align: center; color: var(--text-gold);">${total}</div>`;
+
+            document.getElementById('customResult').innerHTML = resultText;
+        }
+
+        function addExperienceXP(exp, amount) {
+            if (!character.experienceProgress[exp]) {
+                character.experienceProgress[exp] = { level: 0, xp: 0 };
+            }
+
+            character.experienceProgress[exp].xp += amount;
+            
+            const thresholds = [10, 20, 40, 80, 160];
+            const currentLevel = character.experienceProgress[exp].level;
+            
+            if (currentLevel < 5 && character.experienceProgress[exp].xp >= thresholds[currentLevel]) {
+                character.experienceProgress[exp].level++;
+                alert(`${exp} subiu para nível ${character.experienceProgress[exp].level}!`);
+            }
+
+            updateProgression();
+        }
+
+        function updateProgression() {
+            const list = document.getElementById('progressionList');
+            list.innerHTML = '';
+
+            if (character.experiences.length === 0) {
+                list.innerHTML = '<div class="empty-state">Selecione experiências na aba Personagem</div>';
+                return;
+            }
+
+            const thresholds = [10, 20, 40, 80, 160];
+
+            character.experiences.forEach(exp => {
+                const progress = character.experienceProgress[exp] || { level: 0, xp: 0 };
+                const div = document.createElement('div');
+                div.className = 'card';
+
+                const nextThreshold = progress.level < 5 ? thresholds[progress.level] : 160;
+                const percentage = Math.min((progress.xp / nextThreshold) * 100, 100);
+
+                let html = `<h4 style="color: var(--text-gold); margin-bottom: 15px; font-family: 'Cinzel', serif;">${exp}</h4>`;
+                html += `<div class="progress-info">`;
+                html += `<span>Nível ${progress.level}</span>`;
+                html += `<span>Bônus: +${progress.level + 5}</span>`;
+                html += `<span>${progress.xp} / ${nextThreshold} XP</span>`;
+                html += `</div>`;
+                html += `<div class="progress-bar">`;
+                html += `<div class="progress-fill" style="width: ${percentage}%"></div>`;
+                html += `</div>`;
+
+                div.innerHTML = html;
+                list.appendChild(div);
+            });
+        }
+
+        function saveCharacter() {
+            character.name = document.getElementById('charName').value;
+            
+            if (document.getElementById('currentHP')) {
+                character.currentHP = parseInt(document.getElementById('currentHP').value) || 0;
+                character.currentMP = parseInt(document.getElementById('currentMP').value) || 0;
+                character.currentStamina = parseInt(document.getElementById('currentStamina').value) || 10;
+            }
+            
+            localStorage.setItem('antigamenteCharacter', JSON.stringify(character));
+            alert('Personagem salvo!');
+        }
+
+        function exportCharacter() {
+            character.name = document.getElementById('charName').value;
+            const json = JSON.stringify(character, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${character.name || 'personagem'}.json`;
+            a.click();
+        }
+
+        function importCharacter() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = event => {
+                    const imported = JSON.parse(event.target.result);
+                    Object.assign(character, imported);
+                    loadCharacter();
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function loadCharacter() {
+            document.getElementById('charName').value = character.name || '';
+            
+            document.getElementById('raceSelect').value = character.race || '';
+            if (character.race) {
+                selectRace();
+            }
+
+            updateAttributeDisplay();
+            updateStats();
+
+            const grid = document.getElementById('experiencesGrid');
+            const items = grid.querySelectorAll('.experience-item');
+            items.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const exp = item.textContent.trim();
+                if (character.experiences.includes(exp)) {
+                    checkbox.checked = true;
+                    item.classList.add('selected');
+                } else {
+                    checkbox.checked = false;
+                    item.classList.remove('selected');
+                }
+            });
+
+            document.getElementById('expCount').textContent = `${character.experiences.length}/8`;
+            updateInventoryDisplay();
+            updateProgression();
+            updateSpellDisplay();
+            updateEquippedDisplay();
+            
+            if (document.getElementById('currentHP')) {
+                document.getElementById('currentHP').value = character.currentHP || 0;
+                document.getElementById('currentMP').value = character.currentMP || 0;
+                document.getElementById('currentStamina').value = character.currentStamina || 10;
+            }
+        }
+
+        window.onload = function() {
+            initExperiences();
+            updateAttributeDisplay();
+            updateStats();
+
+            const saved = localStorage.getItem('antigamenteCharacter');
+            if (saved) {
+                const shouldLoad = confirm('Personagem salvo encontrado. Carregar?');
+                if (shouldLoad) {
+                    Object.assign(character, JSON.parse(saved));
+                    loadCharacter();
+                }
+            }
+
+            document.getElementById('itemType').addEventListener('change', function() {
+                document.getElementById('weaponFields').style.display = 
+                    this.value === 'arma' ? 'grid' : 'none';
+            });
+        };
+    </script>
+</body>
+</html>
